@@ -13,7 +13,7 @@ This project implements a **Multi-Stage Retrieval Pipeline** rather than a stand
 
 ### 1. Hybrid Search (Recall Maximization)
 Single-mode retrieval is often insufficient for technical domains. We utilize an **Ensemble Retriever** combining two distinct algorithms:
-* **Dense Retrieval (Semantic):** Uses `All-MiniLM-L6-v2` embeddings to capture the semantic meaning of queries.
+* **Dense Retrieval (Semantic):** Uses **`intfloat/multilingual-e5-small`** embeddings. This state-of-the-art multilingual model is specifically chosen for its superior performance in processing **Azerbaijani** and other non-English texts, ensuring accurate semantic capture compared to standard English-centric models.
 * **Sparse Retrieval (Keyword):** Uses the `BM25` (Best Matching 25) algorithm to capture exact keyword matches, crucial for specific IDs, codes, and terminologies.
 * **Weighted Fusion:** Results are combined using **Reciprocal Rank Fusion (RRF)** with a balanced weight distribution (0.5/0.5).
 
@@ -35,7 +35,7 @@ The top candidates (Top-20) from the retrieval stage are passed through a "Reran
 | **LLM** | `Ollama` + `Gemma 2` | Local Intelligence & Inference |
 | **Orchestration** | `LangChain` | RAG Pipeline Management |
 | **Vector DB** | `ChromaDB` | Vector Storage & Indexing |
-| **Embeddings** | `Sentence-Transformers` | Text-to-Vector Conversion |
+| **Embeddings** | `Sentence-Transformers` | Text-to-Vector Conversion |`multilingual-e5-small` | High-performance Multilingual Vectorization |
 | **Reranker** | `Cross-Encoder` (HuggingFace) | Contextual Filtering & Re-ranking |
 | **Interface** | `Streamlit` | User Interface (UI) |
 
