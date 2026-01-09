@@ -52,3 +52,44 @@ The top candidates (Top-20) from the retrieval stage are passed through a "Reran
 ```bash
 git clone [https://github.com/sonasejidli/Private-Audit-System.git](https://github.com/sonasejidli/Private-Audit-System.git)
 cd private-audit-system
+
+### 3. Initialize Ollama Server
+ollama serve
+ollama pull gemma2
+
+### 4. Run the Application
+streamlit run app.py
+
+---
+
+### 5: `requirements.txt`
+*Use this version to ensure anyone cloning your repo gets the exact correct versions of the libraries.*
+
+```text
+# Core Framework
+langchain==0.3.0
+langchain-community==0.3.0
+langchain-core==0.3.0
+
+# UI & Web
+streamlit==1.38.0
+
+# LLM & Local Serving
+ollama==0.3.3
+
+# Vector Database & Embeddings
+chromadb==0.5.5
+sentence-transformers==3.0.1
+
+# Advanced Retrieval Algorithms
+rank_bm25==0.2.2          # For Sparse Search (BM25)
+torch                     # For Cross-Encoder & Embedding models
+
+# PDF Processing
+pypdf==4.3.1
+
+# Utilities
+python-dotenv
+requests
+
+
