@@ -27,7 +27,7 @@ def build_advanced_rag_engine(splits):
 
     # 1. Dense Retrieval (Semantic Search)
     # Captures the "meaning" of the query.
-    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    embeddings = HuggingFaceEmbeddings(model_name="intfloat/multilingual-e5-small")
     vectorstore = Chroma.from_documents(documents=splits, embedding=embeddings)
     vector_retriever = vectorstore.as_retriever(search_kwargs={"k": 20}) # Broad recall
 
