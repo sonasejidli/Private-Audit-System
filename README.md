@@ -35,7 +35,7 @@ The top candidates (Top-20) from the retrieval stage are passed through a "Reran
 | **LLM** | `Ollama` + `Gemma 2` | Local Intelligence & Inference |
 | **Orchestration** | `LangChain` | RAG Pipeline Management |
 | **Vector DB** | `ChromaDB` | Vector Storage & Indexing |
-| **Embeddings** | `Sentence-Transformers` | Text-to-Vector Conversion |`multilingual-e5-small` | High-performance Multilingual Vectorization |
+| **Embeddings** | `Sentence-Transformers` <br> *(Model: `intfloat/multilingual-e5-small`)* | High-performance Multilingual Vectorization (Optimized for Azerbaijani) |
 | **Reranker** | `Cross-Encoder` (HuggingFace) | Contextual Filtering & Re-ranking |
 | **Interface** | `Streamlit` | User Interface (UI) |
 
