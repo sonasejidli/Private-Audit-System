@@ -1,2 +1,54 @@
 # Private-Audit-System
 Privacy-First, High Precision, and Hybrid Retrieval Technology
+##  Project Overview
+The **Private Audit System** is an advanced **Retrieval-Augmented Generation (RAG)** solution designed to analyze sensitive financial documents (PDFs) in a strictly **local (offline)** environment. The primary objective is to eliminate **Data Leakage** risks while overcoming the limitations of traditional vector search.
+
+Unlike basic RAG systems that rely solely on semantic similarity, this system employs a multi-stage pipeline to understand both the semantic meaning and the specific context of complex audit reports.
+
+---
+
+##  Architecture & Algorithmic Approach
+
+This project implements a **Multi-Stage Retrieval Pipeline** rather than a standard "naive" RAG approach:
+
+### 1. Hybrid Search (Recall Maximization)
+Single-mode retrieval is often insufficient for technical domains. We utilize an **Ensemble Retriever** combining two distinct algorithms:
+* **Dense Retrieval (Semantic):** Uses `All-MiniLM-L6-v2` embeddings to capture the semantic meaning of queries.
+* **Sparse Retrieval (Keyword):** Uses the `BM25` (Best Matching 25) algorithm to capture exact keyword matches, crucial for specific IDs, codes, and terminologies.
+* **Weighted Fusion:** Results are combined using **Reciprocal Rank Fusion (RRF)** with a balanced weight distribution (0.5/0.5).
+
+### 2. Cross-Encoder Reranking (Precision Maximization)
+The top candidates (Top-20) from the retrieval stage are passed through a "Reranker":
+* **Model:** `Cross-Encoder/MS-MARCO-MiniLM-L-6-v2`.
+* **Logic:** Unlike Bi-Encoders, this model processes the Query and Document **simultaneously** via a full self-attention mechanism. It assigns a relevance score to each document, effectively filtering out "noise" and hallucinations before the data reaches the LLM.
+
+### 3. Generative Inference (Local LLM)
+* **Model:** `Gemma 2 (9B)` - Google's high-performance open-weights model.
+* **Deployment:** Orchestrated via `Ollama` for fully local CPU/GPU inference. No data is ever transmitted to the cloud.
+
+---
+
+##  Tech Stack
+
+| Component | Technology / Library | Purpose |
+| :--- | :--- | :--- |
+| **LLM** | `Ollama` + `Gemma 2` | Local Intelligence & Inference |
+| **Orchestration** | `LangChain` | RAG Pipeline Management |
+| **Vector DB** | `ChromaDB` | Vector Storage & Indexing |
+| **Embeddings** | `Sentence-Transformers` | Text-to-Vector Conversion |
+| **Reranker** | `Cross-Encoder` (HuggingFace) | Contextual Filtering & Re-ranking |
+| **Interface** | `Streamlit` | User Interface (UI) |
+
+---
+
+##  Installation & Setup
+
+### 1. Prerequisites
+* Python 3.10+
+* Ollama (Must be installed on the host machine)
+* GPU (Recommended for faster inference, but CPU compatible)
+
+### 2. Clone the Repository
+```bash
+git clone [https://github.com/sonasejidli/Private-Audit-System.git](https://github.com/sonasejidli/Private-Audit-System.git)
+cd private-audit-system
